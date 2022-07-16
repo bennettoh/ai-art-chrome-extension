@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { Product } from '../types';
+import { formatCurrency } from '../utils';
 import styles from './ProductCard.module.scss';
 
 interface ProductCardProps {
@@ -7,12 +8,21 @@ interface ProductCardProps {
 }
 
 export const ProductCard: FC<ProductCardProps> = ({ product }) => {
+  const handleClick = () => {
+    window.location.href = product.link;
+  };
+
   return (
-    <a href={product.link} className={styles.root}>
-      <h6>{product.name}</h6>
-      <p>{product.listPrice}</p>
-      <p>{product.withDeal}</p>
-      <img src={product.image} style={{ width: 100 }} />
-    </a>
+    <div className={styles.root} onClick={handleClick}>
+      <div
+        className={styles.image}
+        style={{ backgroundImage: `url("${product.image}")` }}
+      />
+      <p className={styles.name}>{product.name}</p>
+      <div className={styles.priceContainer}>
+        <p className={styles.listPrice}>{formatCurrency(product.listPrice)}</p>
+        <p className={styles.withDeal}>{formatCurrency(product.withDeal)}</p>
+      </div>
+    </div>
   );
 };
