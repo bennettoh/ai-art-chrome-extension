@@ -1,7 +1,6 @@
-export const csvToArray = (
-  str: string,
-  delimiter = `","`
-): Record<string, any>[] => {
+import { Product } from '../types';
+
+export const csvToArray = (str: string, delimiter = `","`): Product[] => {
   // slice from start of text to the first \n index
   // use split to create an array from string by delimiter
   const headers = str.slice(1, str.indexOf('\n') - 1).split(delimiter);
@@ -17,17 +16,21 @@ export const csvToArray = (
   // the object passed as an element of the array
   const arr = rows.map((row) => {
     const values = row.slice(1, row.length - 1).split(delimiter);
-    const el = headers.reduce<Record<string, string | Number>>(function (
-      object,
-      header,
-      index
-    ) {
-      const value = values[index];
-      object[header] = isNaN(value as any) ? value : parseFloat(value);
-      return object;
-    },
-    {});
-    return el;
+    const el = headers.reduce<Record<string, string | Number>>(
+      function (object, header, index) {
+        const value = values[index];
+        object[header] = isNaN(value as any) ? value : parseFloat(value);
+        return object;
+      },
+      {
+        name: '',
+        listPrice: 0,
+        withDeal: 0,
+        url: '',
+        image: '',
+      }
+    );
+    return (el as unknown) as Product;
   });
 
   // return the array

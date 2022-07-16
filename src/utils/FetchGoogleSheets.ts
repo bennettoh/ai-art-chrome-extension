@@ -1,6 +1,7 @@
 import { csvToArray } from '.';
+import { Product } from '../types';
 
-export const fetchGoogleSheets = async (url: string) => {
+export const fetchGoogleSheets = async (url: string): Promise<Product[]> => {
   return fetch(url)
     .then((response) => response.body)
     .then((rb) => {
