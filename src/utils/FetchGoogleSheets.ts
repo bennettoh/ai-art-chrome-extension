@@ -1,4 +1,3 @@
-import { csvToArray } from '.';
 import { Product } from '../types';
 
 export const fetchGoogleSheets = async (url: string): Promise<Product[]> => {
@@ -35,7 +34,12 @@ export const fetchGoogleSheets = async (url: string): Promise<Product[]> => {
       return new Response(stream).text();
     })
     .then((result) => {
-      // Do things with result
-      return csvToArray(result);
+      // parse to json format
+      const responseJSON = JSON.parse(
+        result
+          .split('\n')[1]
+          .replace(/(^google\.visualization\.Query\.setResponse\(|\);$)/g, '')
+      );
+      return responseJSON.table.rows;
     });
 };

@@ -1,10 +1,17 @@
 export interface Product {
-  name: string;
-  listPrice: number;
-  withDeal: number;
-  url: string;
-  image: string;
-  link: string;
+  tweetDate: string;
+  actionDate: string;
+  displayName: string;
+  username: string;
+  tweetUrl: string;
+  mediaType: string;
+  mediaUrl: string;
+  savedFileName: string;
+  remarks: string;
+  tweetContent: string;
+  replies: string;
+  retweets: string;
+  likes: string;
 }
 
 export type ProductProps = keyof Product;
